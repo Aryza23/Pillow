@@ -64,6 +64,6 @@ def test_save(tmp_path):
     im = hopper()
 
     for ext in [".wmf", ".emf"]:
-        tmpfile = str(tmp_path / ("temp" + ext))
+        tmpfile = str(tmp_path / f"temp{ext}")
         with pytest.raises(OSError):
             im.save(tmpfile)

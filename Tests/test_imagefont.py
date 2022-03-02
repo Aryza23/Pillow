@@ -80,7 +80,7 @@ class TestImageFont:
             self._render(f)
 
     def test_non_ascii_path(self, tmp_path):
-        tempfile = str(tmp_path / ("temp_" + chr(128) + ".ttf"))
+        tempfile = str(tmp_path / f"temp_{chr(128)}.ttf")
         try:
             shutil.copy(FONT_PATH, tempfile)
         except UnicodeEncodeError:
@@ -177,8 +177,9 @@ class TestImageFont:
     )
     def test_getlength(self, text, mode, font, size, length_basic, length_raqm):
         f = ImageFont.truetype(
-            "Tests/fonts/" + font, size, layout_engine=self.LAYOUT_ENGINE
+            f"Tests/fonts/{font}", size, layout_engine=self.LAYOUT_ENGINE
         )
+
 
         im = Image.new(mode, (1, 1), 0)
         d = ImageDraw.Draw(im)
@@ -233,9 +234,7 @@ class TestImageFont:
             draw.multiline_text((0, 0), TEST_TEXT, font=ttf, align=align)
 
             # Epsilon ~.5 fails with FreeType 2.7
-            assert_image_similar_tofile(
-                im, "Tests/images/multiline_text" + ext + ".png", 6.2
-            )
+            assert_image_similar_tofile(im, f"Tests/images/multiline_text{ext}.png", 6.2)
 
     def test_unknown_align(self):
         im = Image.new(mode="RGB", size=(300, 100))
@@ -894,7 +893,7 @@ class TestImageFont:
 
             assert_image_similar_tofile(im, "Tests/images/cbdt_notocoloremoji.png", 6.2)
         except IOError as e:  # pragma: no cover
-            assert str(e) in ("unimplemented feature", "unknown file format")
+            assert str(e) in {"unimplemented feature", "unknown file format"}
             pytest.skip("freetype compiled without libpng or CBDT support")
 
     @skip_unless_feature_version("freetype2", "2.5.0")
@@ -915,7 +914,7 @@ class TestImageFont:
                 im, "Tests/images/cbdt_notocoloremoji_mask.png", 6.2
             )
         except IOError as e:  # pragma: no cover
-            assert str(e) in ("unimplemented feature", "unknown file format")
+            assert str(e) in {"unimplemented feature", "unknown file format"}
             pytest.skip("freetype compiled without libpng or CBDT support")
 
     @skip_unless_feature_version("freetype2", "2.5.1")
@@ -934,7 +933,7 @@ class TestImageFont:
 
             assert_image_similar_tofile(im, "Tests/images/chromacheck-sbix.png", 1)
         except IOError as e:  # pragma: no cover
-            assert str(e) in ("unimplemented feature", "unknown file format")
+            assert str(e) in {"unimplemented feature", "unknown file format"}
             pytest.skip("freetype compiled without libpng or SBIX support")
 
     @skip_unless_feature_version("freetype2", "2.5.1")
@@ -953,7 +952,7 @@ class TestImageFont:
 
             assert_image_similar_tofile(im, "Tests/images/chromacheck-sbix_mask.png", 1)
         except IOError as e:  # pragma: no cover
-            assert str(e) in ("unimplemented feature", "unknown file format")
+            assert str(e) in {"unimplemented feature", "unknown file format"}
             pytest.skip("freetype compiled without libpng or SBIX support")
 
     @skip_unless_feature_version("freetype2", "2.10.0")

@@ -303,7 +303,7 @@ class TestFilePng:
 
     def test_save_greyscale_transparency(self, tmp_path):
         for mode, num_transparent in {"1": 1994, "L": 559, "I": 559}.items():
-            in_file = "Tests/images/" + mode.lower() + "_trns.png"
+            in_file = f"Tests/images/{mode.lower()}_trns.png"
             with Image.open(in_file) as im:
                 assert im.mode == mode
                 assert im.info["transparency"] == 255

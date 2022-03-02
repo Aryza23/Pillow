@@ -94,7 +94,7 @@ class TestImagingPaste:
     def test_image_solid(self):
         for mode in ("RGBA", "RGB", "L"):
             im = Image.new(mode, (200, 200), "red")
-            im2 = getattr(self, "gradient_" + mode)
+            im2 = getattr(self, f"gradient_{mode}")
 
             im.paste(im2, (12, 23))
 
@@ -104,7 +104,7 @@ class TestImagingPaste:
     def test_image_mask_1(self):
         for mode in ("RGBA", "RGB", "L"):
             im = Image.new(mode, (200, 200), "white")
-            im2 = getattr(self, "gradient_" + mode)
+            im2 = getattr(self, f"gradient_{mode}")
 
             self.assert_9points_paste(
                 im,
@@ -126,7 +126,7 @@ class TestImagingPaste:
     def test_image_mask_L(self):
         for mode in ("RGBA", "RGB", "L"):
             im = Image.new(mode, (200, 200), "white")
-            im2 = getattr(self, "gradient_" + mode)
+            im2 = getattr(self, f"gradient_{mode}")
 
             self.assert_9points_paste(
                 im,
@@ -148,7 +148,7 @@ class TestImagingPaste:
     def test_image_mask_RGBA(self):
         for mode in ("RGBA", "RGB", "L"):
             im = Image.new(mode, (200, 200), "white")
-            im2 = getattr(self, "gradient_" + mode)
+            im2 = getattr(self, f"gradient_{mode}")
 
             self.assert_9points_paste(
                 im,
@@ -170,7 +170,7 @@ class TestImagingPaste:
     def test_image_mask_RGBa(self):
         for mode in ("RGBA", "RGB", "L"):
             im = Image.new(mode, (200, 200), "white")
-            im2 = getattr(self, "gradient_" + mode)
+            im2 = getattr(self, f"gradient_{mode}")
 
             self.assert_9points_paste(
                 im,
@@ -225,10 +225,10 @@ class TestImagingPaste:
             )
 
     def test_color_mask_L(self):
-        for mode in ("RGBA", "RGB", "L"):
-            im = getattr(self, "gradient_" + mode).copy()
-            color = "white"
+        color = "white"
 
+        for mode in ("RGBA", "RGB", "L"):
+            im = getattr(self, f"gradient_{mode}").copy()
             self.assert_9points_paste(
                 im,
                 color,
@@ -247,10 +247,10 @@ class TestImagingPaste:
             )
 
     def test_color_mask_RGBA(self):
-        for mode in ("RGBA", "RGB", "L"):
-            im = getattr(self, "gradient_" + mode).copy()
-            color = "white"
+        color = "white"
 
+        for mode in ("RGBA", "RGB", "L"):
+            im = getattr(self, f"gradient_{mode}").copy()
             self.assert_9points_paste(
                 im,
                 color,
@@ -269,10 +269,10 @@ class TestImagingPaste:
             )
 
     def test_color_mask_RGBa(self):
-        for mode in ("RGBA", "RGB", "L"):
-            im = getattr(self, "gradient_" + mode).copy()
-            color = "white"
+        color = "white"
 
+        for mode in ("RGBA", "RGB", "L"):
+            im = getattr(self, f"gradient_{mode}").copy()
             self.assert_9points_paste(
                 im,
                 color,

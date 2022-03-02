@@ -138,31 +138,25 @@ class TestFileLibTiff(LibTiffTestCase):
 
     def test_write_metadata(self, tmp_path):
         """Test metadata writing through libtiff"""
+        # PhotometricInterpretation is set from SAVE_INFO,
+        # not the original image.
+        ignored = [
+            "StripByteCounts",
+            "RowsPerStrip",
+            "PageNumber",
+            "PhotometricInterpretation",
+        ]
+
+        # https://github.com/python-pillow/Pillow/issues/1561
+        requested_fields = ["StripByteCounts", "RowsPerStrip", "StripOffsets"]
         for legacy_api in [False, True]:
             f = str(tmp_path / "temp.tiff")
             with Image.open("Tests/images/hopper_g4.tif") as img:
                 img.save(f, tiffinfo=img.tag)
 
-                if legacy_api:
-                    original = img.tag.named()
-                else:
-                    original = img.tag_v2.named()
-
-            # PhotometricInterpretation is set from SAVE_INFO,
-            # not the original image.
-            ignored = [
-                "StripByteCounts",
-                "RowsPerStrip",
-                "PageNumber",
-                "PhotometricInterpretation",
-            ]
-
+                original = img.tag.named() if legacy_api else img.tag_v2.named()
             with Image.open(f) as loaded:
-                if legacy_api:
-                    reloaded = loaded.tag.named()
-                else:
-                    reloaded = loaded.tag_v2.named()
-
+                reloaded = loaded.tag.named() if legacy_api else loaded.tag_v2.named()
             for tag, value in itertools.chain(reloaded.items(), original.items()):
                 if tag not in ignored:
                     val = original[tag]
@@ -179,8 +173,6 @@ class TestFileLibTiff(LibTiffTestCase):
                     else:
                         assert val == value, f"{tag} didn't roundtrip"
 
-            # https://github.com/python-pillow/Pillow/issues/1561
-            requested_fields = ["StripByteCounts", "RowsPerStrip", "StripOffsets"]
             for field in requested_fields:
                 assert field in reloaded, f"{field} not in metadata"
 
@@ -940,7 +932,7 @@ class TestFileLibTiff(LibTiffTestCase):
     def test_orientation(self):
         with Image.open("Tests/images/g4_orientation_1.tif") as base_im:
             for i in range(2, 9):
-                with Image.open("Tests/images/g4_orientation_" + str(i) + ".tif") as im:
+                with Image.open(f"Tests/images/g4_orientation_{str(i)}.tif") as im:
                     im.load()
 
                     assert_image_similar(base_im, im, 0.7)

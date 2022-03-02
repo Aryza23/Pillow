@@ -61,11 +61,7 @@ def test_basic(tmp_path):
         imIn.putpixel((0, 0), 2)
         assert imIn.getpixel((0, 0)) == 2
 
-        if mode == "L":
-            maximum = 255
-        else:
-            maximum = 32767
-
+        maximum = 255 if mode == "L" else 32767
         imIn = Image.new(mode, (1, 1), 256)
         assert imIn.getpixel((0, 0)) == min(256, maximum)
 

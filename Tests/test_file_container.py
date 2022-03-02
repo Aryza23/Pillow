@@ -123,18 +123,18 @@ def test_readline():
 
 
 def test_readlines():
+    expected = [
+        "This is line 1\n",
+        "This is line 2\n",
+        "This is line 3\n",
+        "This is line 4\n",
+        "This is line 5\n",
+        "This is line 6\n",
+        "This is line 7\n",
+        "This is line 8\n",
+    ]
     # Arrange
     for bytesmode in (True, False):
-        expected = [
-            "This is line 1\n",
-            "This is line 2\n",
-            "This is line 3\n",
-            "This is line 4\n",
-            "This is line 5\n",
-            "This is line 6\n",
-            "This is line 7\n",
-            "This is line 8\n",
-        ]
         with open(TEST_FILE, "rb" if bytesmode else "r") as fh:
             container = ContainerIO.ContainerIO(fh, 0, 120)
 

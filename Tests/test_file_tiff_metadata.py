@@ -30,8 +30,8 @@ def test_rt_metadata(tmp_path):
 
     basetextdata = "This is some arbitrary metadata for a text field"
     bindata = basetextdata.encode("ascii") + b" \xff"
-    textdata = basetextdata + " " + chr(255)
-    reloaded_textdata = basetextdata + " ?"
+    textdata = f'{basetextdata} {chr(255)}'
+    reloaded_textdata = f'{basetextdata} ?'
     floatdata = 12.345
     doubledata = 67.89
     info = TiffImagePlugin.ImageFileDirectory()

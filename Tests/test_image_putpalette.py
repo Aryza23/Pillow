@@ -9,8 +9,7 @@ def test_putpalette():
     def palette(mode):
         im = hopper(mode).copy()
         im.putpalette(list(range(256)) * 3)
-        p = im.getpalette()
-        if p:
+        if p := im.getpalette():
             return im.mode, p[:10]
         return im.mode
 

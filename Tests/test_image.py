@@ -67,12 +67,12 @@ class TestImage:
     def test_sanity(self):
 
         im = Image.new("L", (100, 100))
-        assert repr(im)[:45] == "<PIL.Image.Image image mode=L size=100x100 at"
+        assert repr(im).startswith("<PIL.Image.Image image mode=L size=100x100 at")
         assert im.mode == "L"
         assert im.size == (100, 100)
 
         im = Image.new("RGB", (100, 100))
-        assert repr(im)[:45] == "<PIL.Image.Image image mode=RGB size=100x100 "
+        assert repr(im).startswith("<PIL.Image.Image image mode=RGB size=100x100 ")
         assert im.mode == "RGB"
         assert im.size == (100, 100)
 
@@ -150,7 +150,7 @@ class TestImage:
             assert im.size == (128, 128)
 
             for ext in (".jpg", ".jp2"):
-                temp_file = str(tmp_path / ("temp." + ext))
+                temp_file = str(tmp_path / f"temp.{ext}")
                 if os.path.exists(temp_file):
                     os.remove(temp_file)
                 im.save(Path(temp_file))

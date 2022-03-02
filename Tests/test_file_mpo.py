@@ -145,8 +145,7 @@ def test_mp_attribute():
     for test_file in test_files:
         with Image.open(test_file) as im:
             mpinfo = im._getmp()
-        frameNumber = 0
-        for mpentry in mpinfo[0xB002]:
+        for frameNumber, mpentry in enumerate(mpinfo[0xB002]):
             mpattr = mpentry["Attribute"]
             if frameNumber:
                 assert not mpattr["RepresentativeImageFlag"]
@@ -157,7 +156,6 @@ def test_mp_attribute():
             assert mpattr["ImageDataFormat"] == "JPEG"
             assert mpattr["MPType"] == "Multi-Frame Image: (Disparity)"
             assert mpattr["Reserved"] == 0
-            frameNumber += 1
 
 
 def test_seek():

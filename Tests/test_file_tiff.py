@@ -147,9 +147,7 @@ class TestFileTiff:
         [(None, 72.8), (2, 72.8), (3, 184.912)],
     )
     def test_load_float_dpi(self, resolutionUnit, dpi):
-        with Image.open(
-            "Tests/images/hopper_float_dpi_" + str(resolutionUnit) + ".tif"
-        ) as im:
+        with Image.open(f"Tests/images/hopper_float_dpi_{str(resolutionUnit)}.tif") as im:
             assert im.tag_v2.get(RESOLUTION_UNIT) == resolutionUnit
             assert im.info["dpi"] == (dpi, dpi)
 
@@ -375,9 +373,9 @@ class TestFileTiff:
             assert len_before == len_after + 1
 
     def test_load_byte(self):
+        data = b"abc"
         for legacy_api in [False, True]:
             ifd = TiffImagePlugin.ImageFileDirectory_v2()
-            data = b"abc"
             ret = ifd.load_byte(data, legacy_api)
             assert ret == b"abc"
 

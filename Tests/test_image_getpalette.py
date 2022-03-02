@@ -3,10 +3,7 @@ from .helper import hopper
 
 def test_palette():
     def palette(mode):
-        p = hopper(mode).getpalette()
-        if p:
-            return p[:10]
-        return None
+        return p[:10] if (p := hopper(mode).getpalette()) else None
 
     assert palette("1") is None
     assert palette("L") is None

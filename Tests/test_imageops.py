@@ -125,7 +125,7 @@ def test_pad():
             assert new_im.size == new_size
 
             assert_image_similar_tofile(
-                new_im, "Tests/images/imageops_pad_" + label + "_" + str(i) + ".jpg", 6
+                new_im, f"Tests/images/imageops_pad_{label}_{str(i)}.jpg", 6
             )
 
 

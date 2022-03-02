@@ -22,9 +22,9 @@ IMAGES_PATH = os.path.join("Tests", "images", "imagedraw")
 W, H = 100, 100
 
 # Bounding box points
-X0 = int(W / 4)
+X0 = W // 4
 X1 = int(X0 * 3)
-Y0 = int(H / 4)
+Y0 = H // 4
 Y1 = int(X0 * 3)
 
 # Two kinds of bounding box
@@ -807,7 +807,7 @@ def test_rounded_rectangle_translucent(xy, suffix):
 
     # Assert
     assert_image_equal_tofile(
-        im, "Tests/images/imagedraw_rounded_rectangle_" + suffix + ".png"
+        im, f"Tests/images/imagedraw_rounded_rectangle_{suffix}.png"
     )
 
 
@@ -825,7 +825,7 @@ def test_floodfill():
         ImageDraw.floodfill(im, centre_point, value)
 
         # Assert
-        expected = "Tests/images/imagedraw_floodfill_" + mode + ".png"
+        expected = f"Tests/images/imagedraw_floodfill_{mode}.png"
         with Image.open(expected) as im_floodfill:
             assert_image_equal(im, im_floodfill)
 
@@ -901,8 +901,8 @@ def create_base_image_draw(
     size, mode=DEFAULT_MODE, background1=WHITE, background2=GRAY
 ):
     img = Image.new(mode, size, background1)
-    for x in range(0, size[0]):
-        for y in range(0, size[1]):
+    for x in range(size[0]):
+        for y in range(size[1]):
             if (x + y) % 2 == 0:
                 img.putpixel((x, y), background2)
     return img, ImageDraw.Draw(img)
@@ -1206,7 +1206,7 @@ def test_stroke():
 
         # Assert
         assert_image_similar_tofile(
-            im, "Tests/images/imagedraw_stroke_" + suffix + ".png", 3.1
+            im, f"Tests/images/imagedraw_stroke_{suffix}.png", 3.1
         )
 
 

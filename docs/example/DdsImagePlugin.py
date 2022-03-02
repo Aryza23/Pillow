@@ -138,10 +138,11 @@ def _dxt1(data, width, height):
                         else:
                             r, g, b = _c2b(r0, r1), _c2b(g0, g1), _c2b(b0, b1)
                     elif control == 3:
-                        if color0 > color1:
-                            r, g, b = _c3(r0, r1), _c3(g0, g1), _c3(b0, b1)
-                        else:
-                            r, g, b = 0, 0, 0
+                        r, g, b = (
+                            (_c3(r0, r1), _c3(g0, g1), _c3(b0, b1))
+                            if color0 > color1
+                            else (0, 0, 0)
+                        )
 
                     idx = 4 * ((y + j) * width + x + i)
                     ret[idx : idx + 4] = struct.pack("4B", r, g, b, 255)
@@ -158,19 +159,17 @@ def _dxtc_alpha(a0, a1, ac0, ac1, ai):
         ac = (ac1 >> (ai - 16)) & 7
 
     if ac == 0:
-        alpha = a0
+        return a0
     elif ac == 1:
-        alpha = a1
+        return a1
     elif a0 > a1:
-        alpha = ((8 - ac) * a0 + (ac - 1) * a1) // 7
+        return ((8 - ac) * a0 + (ac - 1) * a1) // 7
     elif ac == 6:
-        alpha = 0
+        return 0
     elif ac == 7:
-        alpha = 0xFF
+        return 0xFF
     else:
-        alpha = ((6 - ac) * a0 + (ac - 1) * a1) // 5
-
-    return alpha
+        return ((6 - ac) * a0 + (ac - 1) * a1) // 5
 
 
 def _dxt5(data, width, height):

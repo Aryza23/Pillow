@@ -4,10 +4,7 @@ from .helper import hopper
 def test_getcolors():
     def getcolors(mode, limit=None):
         im = hopper(mode)
-        if limit:
-            colors = im.getcolors(limit)
-        else:
-            colors = im.getcolors()
+        colors = im.getcolors(limit) if limit else im.getcolors()
         if colors:
             return len(colors)
         return None
